@@ -28,6 +28,7 @@ public class EiditUpdateTests  extends BaseClass{
 		 HashMap<String,String> hMap2 = editPage.getAllFiledValues();
 		 sa.assertEquals(hMap1, hMap2);
 		// sa.assertAll();
+		 System.out.println("added new line");
 		
 	}
 	
