@@ -3,9 +3,11 @@ package org.iit.mmp.helper;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
+import org.iit.mmp.config.ProjectConfiguration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -14,7 +16,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class HelperClass {
-WebDriver driver;
+private WebDriver driver;
+private By userNameId= By.id("username");
+
 	public HelperClass(WebDriver driver) 
 	{
 		this.driver= driver;
@@ -76,8 +80,33 @@ public void highLightElement(WebElement ele){
 
 	
 }
+
+
+	public void patientLogin() throws Exception 
+	{
+		ProjectConfiguration pConfig = new ProjectConfiguration();	
+		Properties pro = pConfig.loadProperites();  
+		driver.findElement(By.xpath("//input[@id='username']")).sendKeys(pro.getProperty("patientUser"));
+		driver.findElement(By.xpath("//input[@id='password']")).sendKeys(pro.getProperty("patientPassword"));
+		driver.findElement(By.xpath("//input[@type='submit']")).click();
+    }
+	public void adminLogin() throws Exception 
+	{
+		ProjectConfiguration pConfig = new ProjectConfiguration();	
+		Properties pro = pConfig.loadProperites();  
+		driver.findElement(By.xpath("//input[@id='username']")).sendKeys(pro.getProperty("adminUser"));
+		driver.findElement(By.xpath("//input[@id='password']")).sendKeys(pro.getProperty("adminPassword"));
+	driver.findElement(By.xpath("//input[@type='submit']")).click();
+	}
+
 public void closeDriver() {
 	//driver.findElement(By.xpath("//span[contains(text(), 'Logout')]")).click();
 	driver.close();
+}
+
+
+public void switchToSideBar() {
+	driver.findElement(By.xpath("//div[@class='left-sidebar']")).click();
+	
 }
 }
